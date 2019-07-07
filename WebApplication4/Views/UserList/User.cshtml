@@ -1,0 +1,25 @@
+﻿@using WebApplication4.Models;
+@model User
+<html>
+<head>
+    </head>
+<body>
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(m=>m.sid)</td><td>@Html.DisplayFor(m=>m.sid)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(m=>m.skey)</td><td>@Html.DisplayFor(m=>m.skey)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(m=>m.rem_check)</td><td>@Html.DisplayFor(m=>m.rem_check)
+            </td>
+        </tr>
+</table>
+</body>
+</html>

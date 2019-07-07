@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>欢迎登录</title>
+</head>
+<body>
+    <form method="post" action="/Login/Home">
+        用户名：<input type="text" name="LoginId" />
+        <br /><br />
+        密码：<input type="password" name="Loginpwd" />
+        <br /><br />
+        <input type="submit" value="登录" /><br />
+        <span style="color:red">@ViewData["info"]</span>
+    </form>
+</body>
+</html>
+

@@ -1,0 +1,93 @@
+﻿@using WebApplication4.Models;
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Page Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="~/Scripts/jquery-3.4.0.min.js"></script>
+    <script type="text/javascript">
+        var pickresult = -1;         //单选结果
+        var signal = 1;              //信号量
+        function pick(id) {
+            var pickseat = document.getElementById(id);            //获取点击对象
+            if (pickseat.getAttribute("alt") == 0 && signal == 1) {
+                pickseat.setAttribute("src", "/Picture/b.png");
+                pickseat.setAttribute("alt", "1");
+                signal--;
+                pickresult = id;
+            }
+            else if (pickseat.getAttribute("alt") == 1 && signal == 0){
+                pickseat.setAttribute("src", "/Picture/a.png");
+                pickseat.setAttribute("alt", "0");
+                signal++;
+                pickresult = -1;
+            }
+        }
+
+        function transformValue() {
+            if (pickresult == -1 && form.Customer_ID.value != "") {
+                alert("没有选择任何座位");
+            }
+            else if (pickresult > 0 && form.Customer_ID.value == "") {
+                alert("没有输入顾客ID");
+            }
+            else if (pickresult == -1 && form.Customer_ID.value == "")
+            {
+                alert("没有选择任何座位 没有输入顾客ID");
+            }
+            else {
+                alert("选座成功");
+                document.form.result.value = pickresult;
+                document.form.submit();
+                document.formcur_flight.submit();
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    @{
+        int length = Model.SeatArray.Length;
+        int row = 10;
+        int col = length / row;
+    }
+    <div style="margin:auto;width:500px;height:300px">
+        <div></div>
+        @{
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < col; j++)
+                {
+                    string seatid = (i * col + j + 1).ToString();
+                    if (Model.SeatArray[i * col + j] < 0)
+                    {
+                        <img id="@(seatid)" alt="0" src="~/Picture/a.png" style="width:20px;height:20px;float:left;margin-left:5px;margin-top:5px" onclick="pick(this.id)" />
+                    }
+                    else
+                    {
+                        <img id="@(seatid)" alt="2" src="~/Picture/b.png" style="width:20px;height:20px;float:left;margin-left:5px;margin-top:5px;color:lawngreen" />
+                    }
+                }
+                <br />
+            }
+         }
+        </div>
+    <rb/>
+    <div style="margin:0 auto;width:500px;margin-left:500px">
+        <form method="post" action="/ChooseFlight/ReceiveMsg" name="form" style="margin:0 auto;width:500px">
+            顾客ID:<input type="text" name="Customer_ID" value="">
+
+            <input type="button" onclick="transformValue()" value="确认选座" style="margin-left:230px">
+
+            <input type="hidden" name="result" id="resultid" value="">
+
+            <input type="hidden" name="current_flight" id="current_flightid" value="@Model.Flight_ID">
+        </form>
+    </div>
+</body>
+
+</html>
+

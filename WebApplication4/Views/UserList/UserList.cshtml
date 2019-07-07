@@ -1,0 +1,32 @@
+﻿@using WebApplication4.Models;
+@model IEnumerable<User>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>用户列表</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>账号</th>
+            <th>密码</th>
+            <th>是否为会员</th>
+        </tr>
+        @{
+
+            foreach (User user in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(user.sid, "GetUserById", new { id = user.sid })
+                    </td>
+                    <td>@Html.DisplayFor(m => user.skey)</td>
+                    <td>@Html.DisplayFor(m => user.rem_check)</td>
+                </tr>
+            }
+        }
+    </table>
+</body>
+</html>
+
